@@ -1,15 +1,11 @@
 import React from 'react';
 
 class CoursesPage extends React.Component {
-    constructor() {
-        super();
-
-        this.state={
-            course: {
-                title: ''
-            }
-        };
-    }
+    state={
+        course: {
+            title: ''
+        }
+    };
 
     handleChange= (event)=>{
         const course={...this.state.course, title:event.target.value};
