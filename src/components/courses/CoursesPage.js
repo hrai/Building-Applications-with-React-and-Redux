@@ -12,9 +12,11 @@ class CoursesPage extends React.Component {
         this.setState({course});
     }
 
+    handleSubmit=()=>{alert(this.state.course.title);}
+
     render() {
         return (
-            <form>
+            <form onSubmit={this.handleSubmit}>
                 <h2>Courses</h2>
                 <h3>Add course</h3>
                 <input type="text" onChange={this.handleChange} value={this.state.course.title} />
