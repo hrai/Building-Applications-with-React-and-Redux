@@ -16,7 +16,7 @@ class CoursesPage extends React.Component {
     }
 
     handleSubmit=(event)=>{
-        this.props.dispatch(courseActions.createCourse(this.state.course));
+        this.props.courseActions.createCourse(this.state.course);
 
         event.preventDefault();
     }
@@ -40,6 +40,10 @@ function mapStateToProps(state){
     return {
         courses: state.courses
     };
+}
+
+function mapDispatchToProps(dispatch) {
+    return { createCourse: course => dispatch(courseActions.createCourse(course)) };
 }
 
 CoursesPage.propTypes={
