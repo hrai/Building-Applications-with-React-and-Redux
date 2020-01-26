@@ -9,7 +9,7 @@ export function loadCourseSuccess(courses){
     return {
         type: types.LOAD_COURSES_SUCCESS,
         courses
-    }
+    };
 }
 
 export function loadCourses(){
@@ -19,5 +19,5 @@ export function loadCourses(){
         }).catch(error=>{
             throw error;
         });
-    }
+    };
 }
