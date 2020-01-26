@@ -4,6 +4,12 @@ import * as courseActions from '../../redux/actions/courseActions';
 import PropTypes from 'prop-types';
 
 class CoursesPage extends React.Component {
+    componentDidMount(){
+        this.props.actions.loadCourses().catch(error=>{
+            alert('loading courses failed ' + error);
+        });
+    }
+
     render() {
         return (
             <>
