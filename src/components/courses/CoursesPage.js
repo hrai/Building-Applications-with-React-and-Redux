@@ -7,9 +7,9 @@ import { bindActionCreators } from "redux";
 class CoursesPage extends React.Component {
 
     componentDidMount(){
-        // const {actions}=this.props;
+        const {actions}=this.props;
 
-        this.props.actions.loadCourses().catch(error=>{
+        actions.loadCourses().catch(error=>{
             alert('loading courses failed ' + error);
         });
     }
@@ -39,7 +39,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 CoursesPage.propTypes={
-    dispatch: PropTypes.func.isRequired,
     actions: PropTypes.object.isRequired,
     courses: PropTypes.array.isRequired
 };
