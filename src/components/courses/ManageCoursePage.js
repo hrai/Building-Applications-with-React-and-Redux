@@ -6,7 +6,10 @@ import PropTypes from "prop-types";
 import { newCourse } from '../../../tools/mockData';
 import CourseForm from "./CourseForm";
 
-function ManageCoursePage ({ courses, authors, loadCourses, loadAuthors, saveCourse, ...props }) {
+function ManageCoursePage({ courses, authors, loadCourses, loadAuthors,
+  history,
+  saveCourse, ...props }) {
+
   const [course, setCourse] = useState({ ...props.course });
   const [errors, setErrors] = useState({});
 
@@ -35,7 +38,9 @@ function ManageCoursePage ({ courses, authors, loadCourses, loadAuthors, saveCou
 
   function handleSave(event){
     event.preventDefault();
-    saveCourse(course);
+    saveCourse(course).then(() => {
+      history.push('/courses');
+    });
   }
 
   return <CourseForm course={course} errors={errors} authors={authors} onChange={handleChange}
@@ -62,7 +67,8 @@ ManageCoursePage.propTypes = {
   loadAuthors: PropTypes.func.isRequired,
   saveCourse: PropTypes.func.isRequired,
   authors: PropTypes.array.isRequired,
-  courses: PropTypes.array.isRequired
+  courses: PropTypes.array.isRequired,
+  history:  PropTypes.object.isRequired
 };
 
 export default connect(
