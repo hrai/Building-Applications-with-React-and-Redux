@@ -21,6 +21,7 @@ module.exports = {
     disableHostCheck: true,
     headers: { "Access-Control-Allow-Origin": "*" },
     https: false,
+    inline: true,
     hot: true
   },
   plugins: [
@@ -30,7 +31,9 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: "src/index.html",
       favicon: "src/favicon.ico"
-    })
+    }),
+    new webpack.NamedModulesPlugin(),
+    new webpack.HotModuleReplacementPlugin()
   ],
   module: {
     rules: [

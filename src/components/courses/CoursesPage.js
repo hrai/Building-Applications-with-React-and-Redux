@@ -33,18 +33,24 @@ class CoursesPage extends React.Component {
     render() {
         return (
             <>
-            <Spinner/>
-            {this.state.redirectToAddCoursePage && <Redirect to='/course' />}
+                {this.state.redirectToAddCoursePage && <Redirect to='/course' />}
                 <h2>Courses</h2>
-            <button
-              style={{ marginBottom: 20 }}
-              className="btn btn-primary add-course"
-              onClick={() => this.setState({ redirectToAddCoursePage: true })}
-            >
-              Add Course
-            </button>
+                {this.props.loading ?
+                    <Spinner /> :
+                    (
+                        <>
+                        <button
+                            style={{ marginBottom: 20 }}
+                            className="btn btn-primary add-course"
+                            onClick={() => this.setState({ redirectToAddCoursePage: true })}
+                        >
+                            Add Course
+                        </button>
 
-            <CourseList courses={this.props.courses} />
+                        <CourseList courses={this.props.courses} />
+                        </>
+                    )
+                }
             </>
         );
     }
@@ -59,7 +65,8 @@ function mapStateToProps(state){
                     authorName: state.authors.find(auth=>auth.id==course.authorId).name
                 };
             }),
-        authors: state.authors
+        authors: state.authors,
+        loading: state.apiCallsInProgress > 0,
     };
 }
 
@@ -75,7 +82,8 @@ function mapDispatchToProps(dispatch) {
 CoursesPage.propTypes={
     actions: PropTypes.object.isRequired,
     authors: PropTypes.array.isRequired,
-    courses: PropTypes.array.isRequired
+    courses: PropTypes.array.isRequired,
+    loading: PropTypes.bool.isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CoursesPage);
