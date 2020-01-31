@@ -9,7 +9,6 @@ import { Redirect } from 'react-router-dom';
 import Spinner from '../common/Spinner';
 
 class CoursesPage extends React.Component {
-
     state = {
         redirectToAddCoursePage: false
     };
