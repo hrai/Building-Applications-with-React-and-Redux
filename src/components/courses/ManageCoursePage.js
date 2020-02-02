@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import {loadCourses, saveCourse} from "../../redux/actions/courseActions";
-import {loadAuthors} from "../../redux/actions/authorActions";
+import { loadCourses, saveCourse } from "../../redux/actions/courseActions";
+import { loadAuthors } from "../../redux/actions/authorActions";
 import PropTypes from "prop-types";
 import { newCourse } from '../../../tools/mockData';
 import CourseForm from "./CourseForm";
@@ -42,12 +42,30 @@ function ManageCoursePage({ courses, authors, loadCourses, loadAuthors,
     }));
   }
 
-  function handleSave(event){
+  function formIsValid() {
+    const { title, authorId, category } = course;
+    const errors = {};
+
+    if (!title) errors.title = "Title is required.";
+    if (!authorId) errors.author = "Author is required";
+    if (!category) errors.category = "Category is required";
+
+    setErrors(errors);
+    // Form is valid if the errors object still has no properties
+    return Object.keys(errors).length === 0;
+  }
+
+  function handleSave(event) {
     event.preventDefault();
+
+    if (!formIsValid())
+      return;
+
     setSaving(true);
 
     saveCourse(course).then(() => {
       toast.success('Course saved.');
+
       history.push('/courses');
     }).catch(error => {
       setSaving(false);
@@ -65,12 +83,12 @@ function ManageCoursePage({ courses, authors, loadCourses, loadAuthors,
 }
 
 function getCourseBySlug(courses, slug) {
-  return courses.find(course => course.slug === slug)||null;
+  return courses.find(course => course.slug === slug) || null;
 }
 
 function mapStateToProps(state, ownProps) {
   const slug = ownProps.match.params.slug;
-  const course = slug && state.courses.length>0 ? getCourseBySlug(state.courses, slug):newCourse;
+  const course = slug && state.courses.length > 0 ? getCourseBySlug(state.courses, slug) : newCourse;
 
   return {
     course,
@@ -92,7 +110,7 @@ ManageCoursePage.propTypes = {
   saveCourse: PropTypes.func.isRequired,
   authors: PropTypes.array.isRequired,
   courses: PropTypes.array.isRequired,
-  history:  PropTypes.object.isRequired
+  history: PropTypes.object.isRequired
 };
 
 export default connect(
